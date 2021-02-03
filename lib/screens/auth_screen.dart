@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-import '../screens/chat_screen.dart';
-
 import '../widgets/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
