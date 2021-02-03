@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_group_chat_application/screens/chat_screen.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
+import '../screens/chat_screen.dart';
 
 import '../widgets/auth_form.dart';
 
@@ -58,10 +60,48 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
+  Future<void> _login() async {
+    try {
+      // by default the login method has the next permissions ['email','public_profile']
+      AccessToken accessToken = await FacebookAuth.instance.login();
+      print(accessToken.toJson());
+      // get the user data
+      final userData = await FacebookAuth.instance.getUserData();
+      print(userData);
+      final AuthCredential facebookAuthCredential =
+          FacebookAuthProvider.getCredential(accessToken: accessToken.token);
+
+      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    } on FacebookAuthException catch (e) {
+      switch (e.errorCode) {
+        case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
+          print("You have a previous login operation in progress");
+          break;
+        case FacebookAuthErrorCode.CANCELLED:
+          print("login cancelled");
+          break;
+        case FacebookAuthErrorCode.FAILED:
+          print("login failed");
+          break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[500],
-        body: AuthForm(_submitAuthForm, _isLoading));
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AuthForm(_submitAuthForm, _isLoading),
+            RaisedButton.icon(
+              icon: Icon(Icons.face),
+              onPressed: _login,
+              label: Text('Login with facebook'),
+            )
+          ],
+        ));
   }
 }

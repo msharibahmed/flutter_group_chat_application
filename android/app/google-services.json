@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:72708057450:android:1686a99ca850f65e6c1d13",
+        "mobilesdk_app_id": "1:72708057450:android:b2fe93c7682b68956c1d13",
         "android_client_info": {
-          "package_name": "com.example.flutter_group_chat_application"
+          "package_name": "com.msharib.flutter_group_chat_application"
         }
       },
       "oauth_client": [
