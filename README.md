@@ -6,6 +6,8 @@ A messaging app made using Flutter framework. In Group Chat India app, users can
       Authentication
       data storage
 ## -Clean and Optimized code
+![](lib/screenshots/screenshot_1.jpg) ![](lib/screenshots/screenshot_2.jpg)
+![](lib/screenshots/screenshot_3.jpg) ![](lib/screenshots/screenshot_4.jpg)
 
 ## Packages Used
 - cupertino_icons: ^1.0.0
