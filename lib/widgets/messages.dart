@@ -27,7 +27,7 @@ class Messages extends StatelessWidget {
                 }
                 final docs = streamSnapshot.data.documents;
 
-                return ListView.builder(
+                return docs.length==0?Center(child: Text('Start Conversation!')):ListView.builder(
                   reverse: true,
                   itemBuilder: (context, index) => MessageBubble(
                     message: docs[index]['text'],
@@ -35,6 +35,9 @@ class Messages extends StatelessWidget {
                         .format(docs[index]['createdAt'].toDate()),
                     isMe: docs[index]['userId'] == futureSnapshot.data.uid,
                     key: ValueKey(docs[index]),
+                    userId: docs[index]['userId'],
+                    userName: docs[index]['username'],
+                    userImage: docs[index]['userImage'],
                   ),
                   itemCount: docs.length,
                 );

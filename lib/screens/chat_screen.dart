@@ -13,8 +13,11 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Flutter Group Chat India'),
+          centerTitle: true,
+          elevation: 0,
+          title: Text('Group Chat India'),
           actions: [
             IconButton(
                 icon: Icon(Icons.logout),

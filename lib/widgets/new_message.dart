@@ -21,17 +21,24 @@ class _NewMesaageState extends State<NewMesaage> {
     textController.clear();
     FocusScope.of(context).unfocus();
     final currentUser = await FirebaseAuth.instance.currentUser();
+    final userData = await Firestore.instance
+        .collection('users')
+        .document(currentUser.uid)
+        .get();
+    print(userData['user_image']);
     await Firestore.instance.collection('chat').add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
       'userId': currentUser.uid,
+      'username': userData['username'],
+      'userImage': userData['user_image']
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(6),
+      padding: const EdgeInsets.only(left: 6, bottom: 6),
       child: Row(
         children: [
           Expanded(
