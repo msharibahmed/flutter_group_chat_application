@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../widgets/auth_form.dart';
 
@@ -16,8 +19,8 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
-  void _submitAuthForm(
-      String email, String userName, String password, bool isLogin) async {
+  void _submitAuthForm(String email, String userName, String password,
+      bool isLogin, File image) async {
     AuthResult authResult;
     try {
       setState(() {
@@ -26,15 +29,20 @@ class _AuthScreenState extends State<AuthScreen> {
       if (isLogin) {
         authResult = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-        // Navigator.pushReplacementNamed(context, ChatScreen.routeName);
       } else {
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child(authResult.user.uid + 'jpg');
+        await ref.putFile(image).onComplete;
+        final photoUrl = await ref.getDownloadURL();
         await Firestore.instance
             .collection('users')
             .document(authResult.user.uid)
-            .setData({'username': userName, 'email': email});
-        // Navigator.pushReplacementNamed(context, ChatScreen.routeName);
+            .setData(
+                {'username': userName, 'email': email, 'user_image': photoUrl});
       }
     } on PlatformException catch (error) {
       var message = 'An error occured, Please check your credentials.';
@@ -58,18 +66,33 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
-  Future<void> _login() async {
+  Future<void> _fbLogin() async {
     try {
       // by default the login method has the next permissions ['email','public_profile']
       AccessToken accessToken = await FacebookAuth.instance.login();
-      print(accessToken.toJson());
+      // print(accessToken.toJson());
       // get the user data
-      final userData = await FacebookAuth.instance.getUserData();
-      print(userData);
       final AuthCredential facebookAuthCredential =
           FacebookAuthProvider.getCredential(accessToken: accessToken.token);
-
-      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      AuthResult authResult;
+      authResult = await FirebaseAuth.instance
+          .signInWithCredential(facebookAuthCredential);
+      // print(authResult.user.uid);
+      // print(authResult.user.displayName);
+      // print(authResult.user.email);
+      // final ref = FirebaseStorage.instance
+      //     .ref()
+      //     .child('user_image')
+      //     .child(authResult.user.uid + 'jpg');
+      // await ref.(authResult.user.photoUrl).onComplete;
+      await Firestore.instance
+          .collection('users')
+          .document(authResult.user.uid)
+          .setData({
+        'username': authResult.user.displayName,
+        'email': authResult.user.email,
+        'user_image': authResult.user.photoUrl
+      });
     } on FacebookAuthException catch (e) {
       switch (e.errorCode) {
         case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
@@ -88,17 +111,13 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey[500],
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            AuthForm(_submitAuthForm, _isLoading),
-            RaisedButton.icon(
-              icon: Icon(Icons.face),
-              onPressed: _login,
-              label: Text('Login with facebook'),
-            )
+            AuthForm(_submitAuthForm, _isLoading, _fbLogin),
           ],
         ));
   }
