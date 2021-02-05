@@ -18,6 +18,7 @@ A messaging app made using Flutter framework. In Group Chat India app, users can
 - firebase_storage: 3.1.5
 - google_fonts: ^1.1.2
 
+## Packages info
    Used Cloud Firestore for storing nad retrieving User data, user messages.
    Used Firebase Auth for Authentication using email/password and facebook.
    Used Firebase Storage for uploading User images.
