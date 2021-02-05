@@ -22,8 +22,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('No Image Selected!')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: const Text('No Image Selected!')));
       }
     });
     Navigator.pop(context);

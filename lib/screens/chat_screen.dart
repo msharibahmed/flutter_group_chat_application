@@ -38,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 DropdownMenuItem(
                   child: Container(
                     child: Row(
-                      children: <Widget>[
+                      children: [
                         const Icon(Icons.exit_to_app),
                         const SizedBox(width: 8),
                         const Text('Logout'),
@@ -57,6 +57,11 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(
+                      "https://wallpaperaccess.com/full/1288076.jpg"),
+                  fit: BoxFit.cover)),
           child: Column(
             children: [Expanded(child: Messages()), NewMesaage()],
           ),

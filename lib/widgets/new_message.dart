@@ -45,7 +45,9 @@ class _NewMesaageState extends State<NewMesaage> {
             textCapitalization: TextCapitalization.sentences,
             controller: textController,
             keyboardType: TextInputType.text,
-            decoration: const InputDecoration(labelText: 'Send a Message...'),
+            decoration: const InputDecoration(
+                labelText: 'Send a Message...',
+                labelStyle: const TextStyle(color: Colors.white)),
             onChanged: (value) {
               setState(() {
                 _enteredMessage = value;
