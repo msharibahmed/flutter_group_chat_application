@@ -21,9 +21,8 @@ class MessageBubble extends StatelessWidget {
     return Row(
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [if(!isMe)
-          CircleAvatar(
-            backgroundImage: NetworkImage(userImage)),
+        children: [
+          if (!isMe) CircleAvatar(backgroundImage: NetworkImage(userImage)),
           Container(
               width: 170,
               decoration: BoxDecoration(
@@ -43,28 +42,29 @@ class MessageBubble extends StatelessWidget {
                   children: [
                     Text(
                       userName,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       message,
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(width: 15),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
                         createdAt,
-                        style: TextStyle(color: Colors.white, fontSize: 12),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     )
                   ],
                 ),
               )),
-              if(isMe)
-          CircleAvatar(
-            backgroundImage: NetworkImage(userImage),
-          )
+          if (isMe)
+            CircleAvatar(
+              backgroundImage: NetworkImage(userImage),
+            )
         ]);
   }
 }

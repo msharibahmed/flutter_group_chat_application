@@ -45,7 +45,7 @@ class _NewMesaageState extends State<NewMesaage> {
             textCapitalization: TextCapitalization.sentences,
             controller: textController,
             keyboardType: TextInputType.text,
-            decoration: InputDecoration(labelText: 'Send a Message...'),
+            decoration: const InputDecoration(labelText: 'Send a Message...'),
             onChanged: (value) {
               setState(() {
                 _enteredMessage = value;
@@ -53,7 +53,7 @@ class _NewMesaageState extends State<NewMesaage> {
             },
           )),
           CupertinoButton(
-              child: Icon(CupertinoIcons.chevron_right_circle_fill),
+              child: const Icon(CupertinoIcons.chevron_right_circle_fill),
               onPressed: textController.text.trim().isEmpty
                   ? null
                   : () {

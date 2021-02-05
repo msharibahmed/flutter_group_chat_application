@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +15,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
   final picker = ImagePicker();
 
   Future getImage(ImageSource option) async {
-    final pickedFile = await picker.getImage(source: option,imageQuality: 50,maxWidth: 150);
+    final pickedFile =
+        await picker.getImage(source: option, imageQuality: 50, maxWidth: 150);
 
     setState(() {
       if (pickedFile != null) {
@@ -38,31 +38,31 @@ class _UserImagePickerState extends State<UserImagePicker> {
             radius: 40,
             backgroundImage: _image != null
                 ? FileImage(_image)
-                : AssetImage('assets/images/profile.jpg')),
+                : const AssetImage('assets/images/profile.jpg')),
         FlatButton.icon(
             onPressed: () {
               showDialog(
                   context: context,
                   builder: (context) => CupertinoAlertDialog(
-                        title: Text('Add Profile Photo'),
+                        title: const Text('Add Profile Photo'),
                         actions: [
                           FlatButton.icon(
-                              icon: Icon(Icons.camera_alt_rounded),
+                              icon: const Icon(Icons.camera_alt_rounded),
                               onPressed: () {
                                 getImage(ImageSource.camera);
                               },
-                              label: Text('Take Photo')),
+                              label: const Text('Take Photo')),
                           FlatButton.icon(
-                              icon: Icon(Icons.photo_album),
+                              icon: const Icon(Icons.photo_album),
                               onPressed: () {
                                 getImage(ImageSource.gallery);
                               },
-                              label: Text('Gallery'))
+                              label: const Text('Gallery'))
                         ],
                       ));
             },
-            icon: Icon(CupertinoIcons.photo),
-            label: Text('Add Profile Photo')),
+            icon: const Icon(CupertinoIcons.photo),
+            label: const Text('Add Profile Photo')),
       ],
     );
   }

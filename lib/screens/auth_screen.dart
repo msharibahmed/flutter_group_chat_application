@@ -88,9 +88,6 @@ class _AuthScreenState extends State<AuthScreen> {
         'email': authResult.user.email,
         'user_image': authResult.user.photoUrl
       });
-      setState(() {
-        _isFbLoading = false;
-      });
     } on FacebookAuthException catch (e) {
       switch (e.errorCode) {
         case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:

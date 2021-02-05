@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:flutter_group_chat_application/widgets/messages.dart';
-import 'package:flutter_group_chat_application/widgets/new_message.dart';
+import '../widgets/messages.dart';
+import '../widgets/new_message.dart';
 
 class ChatScreen extends StatefulWidget {
   static const routeName = 'chat-screen';
@@ -30,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
           actions: [
             DropdownButton(
               underline: Container(),
-              icon: Icon(
+              icon: const Icon(
                 Icons.more_vert,
                 color: Colors.black,
               ),
@@ -39,18 +39,18 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Container(
                     child: Row(
                       children: <Widget>[
-                        Icon(Icons.exit_to_app),
-                        SizedBox(width: 8),
-                        Text('Logout'),
+                        const Icon(Icons.exit_to_app),
+                        const SizedBox(width: 8),
+                        const Text('Logout'),
                       ],
                     ),
                   ),
                   value: 'logout',
                 ),
               ],
-              onChanged: (item) {
+              onChanged: (item) async {
                 if (item == 'logout') {
-                  FirebaseAuth.instance.signOut();
+                  await FirebaseAuth.instance.signOut();
                 }
               },
             ),

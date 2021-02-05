@@ -30,9 +30,9 @@ class _AuthFormState extends State<AuthForm> {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (_userImageFile == null && !_isLogin) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.red,
-          content: Text('Please pick profile photo!')));
+          content: const Text('Please pick profile photo!')));
       return;
     }
 
@@ -62,15 +62,15 @@ class _AuthFormState extends State<AuthForm> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           _isLogin ? 'Log In' : 'Sign Up',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 30),
                         )),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     if (!_isLogin) UserImagePicker(_pickedImage),
                     TextFormField(
-                      key: ValueKey('email'),
+                      key: const ValueKey('email'),
                       validator: (value) {
                         if (value.isEmpty || !value.contains('@')) {
                           return 'Enter valid email address.';
@@ -80,7 +80,7 @@ class _AuthFormState extends State<AuthForm> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           labelText: 'Email address',
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.email,
                             color: Colors.black,
                           )),
@@ -90,7 +90,7 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                     if (!_isLogin)
                       TextFormField(
-                        key: ValueKey('username'),
+                        key: const ValueKey('username'),
                         validator: (value) {
                           if (value.isEmpty || value.length < 4) {
                             return 'Username must be atleast four characters.';
@@ -109,7 +109,7 @@ class _AuthFormState extends State<AuthForm> {
                         },
                       ),
                     TextFormField(
-                      key: ValueKey('password'),
+                      key: const ValueKey('password'),
                       validator: (value) {
                         if (value.isEmpty || value.length < 7) {
                           return 'Password must be greater than seven characters. ';
@@ -119,7 +119,7 @@ class _AuthFormState extends State<AuthForm> {
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.remove_red_eye,
                           color: Colors.black,
                         ),
@@ -134,7 +134,7 @@ class _AuthFormState extends State<AuthForm> {
                     RaisedButton(
                       onPressed: _submit,
                       child: widget.isLoading
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               strokeWidth: 1,
                               backgroundColor: Colors.black,
                             )
@@ -163,7 +163,7 @@ class _AuthFormState extends State<AuthForm> {
                                   _isLogin
                                       ? 'Register'
                                       : 'I already have account!',
-                                  style: TextStyle(color: Colors.blue)))
+                                  style: const TextStyle(color: Colors.blue)))
                         ],
                       )
                   ],
@@ -180,13 +180,13 @@ class _AuthFormState extends State<AuthForm> {
               height: 25,
             ),
             onPressed: widget.fbLogin,
-            label: Text('Login with facebook',
-                style: TextStyle(color: Colors.white)),
+            label: const Text('Login with facebook',
+                style: const TextStyle(color: Colors.white)),
           ),
         if (widget.isFbLoading)
           RaisedButton(
             onPressed: () {},
-            child: CircularProgressIndicator(
+            child: const CircularProgressIndicator(
                 strokeWidth: 1, backgroundColor: Colors.black),
           )
       ]),
