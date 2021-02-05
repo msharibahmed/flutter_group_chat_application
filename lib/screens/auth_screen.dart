@@ -22,7 +22,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isFbLoading = false;
   void _submitAuthForm(String email, String userName, String password,
       bool isLogin, File image) async {
-    AuthResult authResult;
+    UserCredential authResult;
     try {
       setState(() {
         _isLoading = true;
@@ -38,12 +38,12 @@ class _AuthScreenState extends State<AuthScreen> {
             .ref()
             .child('user_image')
             .child(authResult.user.uid + 'jpg');
-        await ref.putFile(image).onComplete;
+        await ref.putFile(image);
         final photoUrl = await ref.getDownloadURL();
-        await Firestore.instance
+        await FirebaseFirestore.instance
             .collection('users')
-            .document(authResult.user.uid)
-            .setData(
+            .doc(authResult.user.uid)
+            .set(
                 {'username': userName, 'email': email, 'user_image': photoUrl});
       }
     } on PlatformException catch (error) {
@@ -77,17 +77,17 @@ class _AuthScreenState extends State<AuthScreen> {
       // print(accessToken.toJson());
 
       final AuthCredential facebookAuthCredential =
-          FacebookAuthProvider.getCredential(accessToken: accessToken.token);
-      AuthResult authResult;
+          FacebookAuthProvider.credential(accessToken.token);
+      UserCredential authResult;
       authResult = await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
-          .document(authResult.user.uid)
-          .setData({
+          .doc(authResult.user.uid)
+          .set({
         'username': authResult.user.displayName,
         'email': authResult.user.email,
-        'user_image': authResult.user.photoUrl
+        'user_image': authResult.user.photoURL
       });
     } on FacebookAuthException catch (e) {
       switch (e.errorCode) {
