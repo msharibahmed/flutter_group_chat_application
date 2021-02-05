@@ -19,6 +19,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
+  var _isFbLoading = false;
   void _submitAuthForm(String email, String userName, String password,
       bool isLogin, File image) async {
     AuthResult authResult;
@@ -67,24 +68,18 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<void> _fbLogin() async {
+    setState(() {
+      _isFbLoading = true;
+    });
     try {
-      // by default the login method has the next permissions ['email','public_profile']
       AccessToken accessToken = await FacebookAuth.instance.login();
       // print(accessToken.toJson());
-      // get the user data
+
       final AuthCredential facebookAuthCredential =
           FacebookAuthProvider.getCredential(accessToken: accessToken.token);
       AuthResult authResult;
       authResult = await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
-      // print(authResult.user.uid);
-      // print(authResult.user.displayName);
-      // print(authResult.user.email);
-      // final ref = FirebaseStorage.instance
-      //     .ref()
-      //     .child('user_image')
-      //     .child(authResult.user.uid + 'jpg');
-      // await ref.(authResult.user.photoUrl).onComplete;
       await Firestore.instance
           .collection('users')
           .document(authResult.user.uid)
@@ -93,6 +88,9 @@ class _AuthScreenState extends State<AuthScreen> {
         'email': authResult.user.email,
         'user_image': authResult.user.photoUrl
       });
+      setState(() {
+      _isFbLoading = false;
+    });
     } on FacebookAuthException catch (e) {
       switch (e.errorCode) {
         case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
@@ -105,20 +103,27 @@ class _AuthScreenState extends State<AuthScreen> {
           print("login failed");
           break;
       }
+      setState(() {
+      _isFbLoading = false;
+    });
     }
+
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.grey[500],
-        body: Column(
+        backgroundColor: Colors.white,
+        body: Stack(children: [
+          Align(alignment: Alignment.topCenter,child: Image.asset('assets/images/loading.jpg')),
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            AuthForm(_submitAuthForm, _isLoading, _fbLogin),
+            AuthForm(_submitAuthForm, _isLoading, _fbLogin,_isFbLoading),
           ],
-        ));
+        )],));
   }
 }

@@ -25,7 +25,6 @@ class _NewMesaageState extends State<NewMesaage> {
         .collection('users')
         .document(currentUser.uid)
         .get();
-    print(userData['user_image']);
     await Firestore.instance.collection('chat').add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),

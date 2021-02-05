@@ -6,10 +6,11 @@ import 'user_image_picker.dart';
 
 class AuthForm extends StatefulWidget {
   final bool isLoading;
+  final bool isFbLoading;
   final void Function(String email, String userName, String password,
       bool isLogin, File image) submitFn;
   final void Function() fbLogin;
-  AuthForm(this.submitFn, this.isLoading, this.fbLogin);
+  AuthForm(this.submitFn, this.isLoading, this.fbLogin, this.isFbLoading);
 
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -171,11 +172,22 @@ class _AuthFormState extends State<AuthForm> {
             ),
           ),
         ),
-        if (_isLogin)
+        if (_isLogin && !widget.isFbLoading)
           RaisedButton.icon(
-            icon: Image.asset('assets/images/fb.png',width: 25,height: 25,),
+            icon: Image.asset(
+              'assets/images/fb.png',
+              width: 25,
+              height: 25,
+            ),
             onPressed: widget.fbLogin,
-            label: Text('Login with facebook',style: TextStyle(color: Colors.white)),
+            label: Text('Login with facebook',
+                style: TextStyle(color: Colors.white)),
+          ),
+        if (widget.isFbLoading)
+          RaisedButton(
+            onPressed: () {},
+            child: CircularProgressIndicator(
+                strokeWidth: 1, backgroundColor: Colors.black),
           )
       ]),
     );
