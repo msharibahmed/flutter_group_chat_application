@@ -6,8 +6,8 @@ import 'user_image_picker.dart';
 
 class AuthForm extends StatefulWidget {
   final bool isLoading;
-  final void Function(
-      String email, String userName, String password, bool isLogin,File image) submitFn;
+  final void Function(String email, String userName, String password,
+      bool isLogin, File image) submitFn;
   final void Function() fbLogin;
   AuthForm(this.submitFn, this.isLoading, this.fbLogin);
 
@@ -37,7 +37,8 @@ class _AuthFormState extends State<AuthForm> {
 
     if (isValid) {
       _formKey.currentState.save();
-      widget.submitFn(_userEmail, _userUserName, _userPassword, _isLogin,_userImageFile);
+      widget.submitFn(
+          _userEmail, _userUserName, _userPassword, _isLogin, _userImageFile);
     }
   }
 
@@ -56,6 +57,16 @@ class _AuthFormState extends State<AuthForm> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          _isLogin ? 'Log In' : 'Sign Up',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 30),
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
                     if (!_isLogin) UserImagePicker(_pickedImage),
                     TextFormField(
                       key: ValueKey('email'),
@@ -162,9 +173,9 @@ class _AuthFormState extends State<AuthForm> {
         ),
         if (_isLogin)
           RaisedButton.icon(
-            icon: Icon(Icons.face),
+            icon: Image.asset('assets/images/fb.png',width: 25,height: 25,),
             onPressed: widget.fbLogin,
-            label: Text('Login with facebook'),
+            label: Text('Login with facebook',style: TextStyle(color: Colors.white)),
           )
       ]),
     );
