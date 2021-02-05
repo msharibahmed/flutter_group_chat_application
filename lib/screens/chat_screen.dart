@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+
 import 'package:flutter_group_chat_application/widgets/messages.dart';
 import 'package:flutter_group_chat_application/widgets/new_message.dart';
 
@@ -17,7 +20,7 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text('Group Chat India'),
+          title: Text('Group Chat India',style: GoogleFonts.dancingScript(color: Colors.black,fontSize: 30,fontWeight: FontWeight.bold)),
           actions: [
             IconButton(
                 icon: Icon(Icons.logout),

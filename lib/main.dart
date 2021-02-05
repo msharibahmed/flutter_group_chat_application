@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_group_chat_application/screens/loading_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import 'screens/loading_screen.dart';
 import 'screens/chat_screen.dart';
 import 'screens/auth_screen.dart';
 
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+            textTheme: GoogleFonts.latoTextTheme(
+              Theme.of(context).textTheme,
+            ),
             primarySwatch: Colors.blue,
             buttonTheme: ButtonTheme.of(context).copyWith(
                 buttonColor: Colors.blue,
