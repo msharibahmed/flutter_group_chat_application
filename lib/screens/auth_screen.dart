@@ -89,8 +89,8 @@ class _AuthScreenState extends State<AuthScreen> {
         'user_image': authResult.user.photoUrl
       });
       setState(() {
-      _isFbLoading = false;
-    });
+        _isFbLoading = false;
+      });
     } on FacebookAuthException catch (e) {
       switch (e.errorCode) {
         case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
@@ -104,11 +104,9 @@ class _AuthScreenState extends State<AuthScreen> {
           break;
       }
       setState(() {
-      _isFbLoading = false;
-    });
+        _isFbLoading = false;
+      });
     }
-
-    
   }
 
   @override
@@ -116,14 +114,19 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        body: Stack(children: [
-          Align(alignment: Alignment.topCenter,child: Image.asset('assets/images/loading.jpg')),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        body: Stack(
           children: [
-            AuthForm(_submitAuthForm, _isLoading, _fbLogin,_isFbLoading),
+            Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset('assets/images/loading.jpg')),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AuthForm(_submitAuthForm, _isLoading, _fbLogin, _isFbLoading),
+              ],
+            )
           ],
-        )],));
+        ));
   }
 }
