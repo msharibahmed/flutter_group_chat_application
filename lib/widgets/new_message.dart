@@ -42,7 +42,7 @@ class _NewMesaageState extends State<NewMesaage> {
         children: [
           Expanded(
               child: TextField(
-                style: TextStyle(color: Colors.white),
+                style:const TextStyle(color: Colors.white),
             textCapitalization: TextCapitalization.sentences,
             controller: textController,
             keyboardType: TextInputType.text,
