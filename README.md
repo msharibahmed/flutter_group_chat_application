@@ -16,9 +16,7 @@ A messaging app made using Flutter framework. In Group Chat India app, users can
 - flutter_facebook_auth: ^2.0.1
 - intl: ^0.16.1
 - image_picker: ^0.6.7+22
-- firebase_messaging: 6.0.13
 - firebase_storage: 3.1.5
-- google_fonts: ^1.1.2
 
 ## Packages info
     Used Cloud Firestore for storing nad retrieving User data, user messages.
