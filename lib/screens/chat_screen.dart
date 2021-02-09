@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 
 import '../widgets/messages.dart';
 import '../widgets/new_message.dart';
@@ -17,8 +16,6 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
         backgroundColor: Colors.blue[50],
         appBar: AppBar(
-          // backwardsCompatibility: false,
-          // systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.blue),
           centerTitle: true,
           elevation: 0,
           title: Text('Group Chat India',
