@@ -19,7 +19,6 @@ class _NewMesaageState extends State<NewMesaage> {
 
   void _sendMessage() async {
     textController.clear();
-    FocusScope.of(context).unfocus();
     final currentUser = FirebaseAuth.instance.currentUser;
     final userData = await FirebaseFirestore.instance
         .collection('users')
@@ -42,7 +41,7 @@ class _NewMesaageState extends State<NewMesaage> {
         children: [
           Expanded(
               child: TextField(
-                style:const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             textCapitalization: TextCapitalization.sentences,
             controller: textController,
             keyboardType: TextInputType.text,

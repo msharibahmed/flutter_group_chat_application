@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_group_chat_application/constant_widgets/constant_widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserImagePicker extends StatefulWidget {
@@ -22,8 +23,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        Scaffold.of(context).showSnackBar(
-            const SnackBar(content: const Text('No Image Selected!')));
+        ConstantWidgets().snackBar(context, 'No Image Selected!');
       }
     });
     Navigator.pop(context);

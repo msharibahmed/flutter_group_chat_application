@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)))),
               routes: {
-                ChatScreen.routeName: (context) => ChatScreen(),
-                AuthScreen.routeName: (context) => AuthScreen()
+                ChatScreen.routeName: (_) => ChatScreen(),
+                AuthScreen.routeName: (_) => AuthScreen()
               },
               home: appSnapshot.connectionState != ConnectionState.done
                   ? LoadingScreen()

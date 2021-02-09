@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../model/message_bubble_model.dart';
+
 class MessageBubble extends StatelessWidget {
-  final String message;
-  final String createdAt;
-  final bool isMe;
-  final Key key;
-  final String userId;
-  final String userName;
-  final String userImage;
-  MessageBubble(
-      {this.message,
-      this.createdAt,
-      this.isMe,
-      this.key,
-      this.userId,
-      this.userName,
-      this.userImage});
+  final MessageBubbleModel bubble;
+  MessageBubble({this.bubble});
   @override
   Widget build(BuildContext context) {
     return Row(
         mainAxisAlignment:
-            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            bubble.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!isMe) CircleAvatar(backgroundImage: NetworkImage(userImage)),
+          if (!bubble.isMe)
+            CircleAvatar(backgroundImage: NetworkImage(bubble.userImage)),
           Container(
               width: 170,
               decoration: BoxDecoration(
@@ -30,8 +20,8 @@ class MessageBubble extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8),
                     topRight: Radius.circular(8),
-                    bottomLeft: Radius.circular(isMe ? 8 : 0),
-                    bottomRight: Radius.circular(isMe ? 0 : 8),
+                    bottomLeft: Radius.circular(bubble.isMe ? 8 : 0),
+                    bottomRight: Radius.circular(bubble.isMe ? 0 : 8),
                   )),
               margin: const EdgeInsets.all(8),
               child: Padding(
@@ -41,19 +31,19 @@ class MessageBubble extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      userName,
+                      bubble.userName,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      message,
+                      bubble.message,
                       style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(width: 15),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        createdAt,
+                        bubble.createdAt,
                         style:
                             const TextStyle(color: Colors.white, fontSize: 12),
                       ),
@@ -61,9 +51,9 @@ class MessageBubble extends StatelessWidget {
                   ],
                 ),
               )),
-          if (isMe)
+          if (bubble.isMe)
             CircleAvatar(
-              backgroundImage: NetworkImage(userImage),
+              backgroundImage: NetworkImage(bubble.userImage),
             )
         ]);
   }

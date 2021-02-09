@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_group_chat_application/constant_widgets/constant_widgets.dart';
 
 import '../widgets/auth_form.dart';
 
@@ -51,12 +52,8 @@ class _AuthScreenState extends State<AuthScreen> {
       if (error != null) {
         message = error.message;
       }
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Colors.red,
-        ),
-      );
+      ConstantWidgets().snackBar(context, message);
+
       setState(() {
         _isLoading = false;
       });

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_group_chat_application/constant_widgets/constant_widgets.dart';
 
 import 'user_image_picker.dart';
 
@@ -30,9 +31,7 @@ class _AuthFormState extends State<AuthForm> {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (_userImageFile == null && !_isLogin) {
-      Scaffold.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.red,
-          content: const Text('Please pick profile photo!')));
+      ConstantWidgets().snackBar(context, 'Please pick profile photo!');
       return;
     }
 
@@ -134,10 +133,7 @@ class _AuthFormState extends State<AuthForm> {
                     RaisedButton(
                       onPressed: _submit,
                       child: widget.isLoading
-                          ? const CircularProgressIndicator(
-                              strokeWidth: 1,
-                              backgroundColor: Colors.black,
-                            )
+                          ? ConstantWidgets().loadingWidgdet
                           : Text(_isLogin ? 'Login' : 'Signup'),
                       color: Colors.blue,
                     ),
@@ -185,10 +181,7 @@ class _AuthFormState extends State<AuthForm> {
           ),
         if (widget.isFbLoading)
           RaisedButton(
-            onPressed: () {},
-            child: const CircularProgressIndicator(
-                strokeWidth: 1, backgroundColor: Colors.black),
-          )
+              onPressed: () {}, child: ConstantWidgets().loadingWidgdet)
       ]),
     );
   }
